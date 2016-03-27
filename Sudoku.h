@@ -44,7 +44,7 @@ class Sudoku {
 		void changeRow(int a, int b);
 		void changeCol(int a, int b);
 		void rotate(int n);
-		void filp(int n);
+		void flip(int n);
 		void transform(void);
 	private:
 		int map[sudokuSize];

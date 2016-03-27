@@ -135,7 +135,7 @@ void Sudoku::rotate(int n){
 	return;
 }
 
-void Sudoku::filp(int n){
+void Sudoku::flip(int n){
 	int i, j;
 	int buf[rowSize];
 
@@ -213,7 +213,7 @@ void Sudoku::change(void){
 	changeCol(rand()%3+3, rand()%3+3);
 	changeCol(rand()%3+6, rand()%3+6);
 	rotate(rand()%101);
-	filp(rand()%2);
+	flip(rand()%2);
 
 	return;
 }
