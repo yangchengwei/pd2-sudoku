@@ -1,39 +1,30 @@
 #include <iostream>
-#include <cstdio>
 #include <vector>
 #include <ctime>
+#include <cstdio>
 #include <cstdlib>
 #include "Sudoku.h"
 using namespace std;
 
-//public function
+
+
+
+///////////////////
+//public function//
+///////////////////
+
+
 void Sudoku::giveQuestion(void){
 	int i, j;
-	srand(time(NULL));
 
+	setMap();
+
+	change();
+	
 	for (i=0 ; i<sudokuSize ; i++){
-		map[i] = 0;
-	}
-	map[rand()%sudokuSize] = (rand()%rowSize) + 1;
-
-	numOfAnswer = 0;		//start solve() without printOut()
-	for (i=0 ; i<rowSize ; i++){
-		for (j=1 ; j<=9 ; j++){
-			if(checkExist(j, row[i], map) == -1){
-				rowLack[i].push_back(j);
-			}
+		if (i%4 != 0){
+			map[i] = 0;
 		}
-	}
-	backTracking(0);		//end solve()
-
-	for (i=0 ; i<sudokuSize ; i++){
-		map[i] = ans[i];
-	}
-	for (i=0 ; i<5 ; i++){
-		change();
-	}
-	for (i=0 ; i<sudokuSize ; i=i+2){
-		map[i] = 0;
 	}
 	
 	printOut(false);
@@ -173,7 +164,14 @@ void Sudoku::transform(void){
 	return;
 }
 
-//private function
+
+
+
+////////////////////
+//private function//
+////////////////////
+
+
 void Sudoku::printOut(bool isAns){
 	int i;
 	
@@ -207,13 +205,30 @@ void Sudoku::change(void){
 
 	changeNum(rand()%rowSize+1, rand()%rowSize+1);
 	changeRow(rand()%3, rand()%3);
-	changeRow(rand()%3+3, rand()%3+3);
-	changeRow(rand()%3+6, rand()%3+6);
 	changeCol(rand()%3, rand()%3);
-	changeCol(rand()%3+3, rand()%3+3);
-	changeCol(rand()%3+6, rand()%3+6);
 	rotate(rand()%101);
 	flip(rand()%2);
+
+	return;
+}
+
+void Sudoku::setMap(void){
+	int i;
+	int modulo[81] = {
+	7, 8, 9, 6, 4, 5, 1, 2, 3,
+	1, 2, 3, 9, 8, 7, 4, 6, 5,
+	4, 5, 6, 2, 3, 1, 7, 9, 8,
+	9, 4, 8, 3, 1, 2, 5, 7, 6,
+	5, 6, 7, 8, 9, 4, 2, 3, 1,
+	2, 3, 1, 5, 7, 6, 9, 8, 4,
+	8, 1, 5, 7, 6, 9, 3, 4, 2,
+	6, 9, 4, 1, 2, 3, 8, 5, 7,
+	3, 7, 2, 4, 5, 8, 6, 1, 9};
+
+
+	for (i=0 ; i<sudokuSize ; i++){
+		map[i] = modulo[i];
+	}
 
 	return;
 }

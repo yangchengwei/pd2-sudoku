@@ -53,6 +53,7 @@ class Sudoku {
 		vector<int> rowLack[9];
 		void printOut(bool isAns);
 		void change(void);
+		void setMap(void);
 		int backTracking(int n);
 		int checkExist(int n, const int* position, int* map);
 };
