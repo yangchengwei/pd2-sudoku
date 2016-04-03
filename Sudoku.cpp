@@ -89,11 +89,13 @@ void Sudoku::changeNum(int a, int b){
 void Sudoku::changeRow(int a, int b){
 	int i;
 	int buf;
+	int A = a-1;
+	int B = b-1;
 
 	for (i=0 ; i<rowSize ; i++){
-		buf = map[row[a][i]];
-		map[row[a][i]] = map[row[b][i]];
-		map[row[b][i]] = buf;
+		buf = map[row[A][i]];
+		map[row[A][i]] = map[row[B][i]];
+		map[row[B][i]] = buf;
 	}
 
 	return;
@@ -102,12 +104,13 @@ void Sudoku::changeRow(int a, int b){
 void Sudoku::changeCol(int a, int b){
 	int i;
 	int buf;
+	int A = a-1;
+	int B = b-1;
 
 	for (i=0 ; i<rowSize ; i++){
-		buf = map[col[a][i]];
-		map[col[a][i]] = map[col[b][i]];
-		
-		map[col[b][i]] = buf;
+		buf = map[col[A][i]];
+		map[col[A][i]] = map[col[B][i]];	
+		map[col[B][i]] = buf;
 	}
 
 	return;
