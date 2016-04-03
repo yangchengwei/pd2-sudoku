@@ -53,6 +53,7 @@ class Sudoku {
 		void printOut(bool isAns);
 		void change(void);
 		void setMap(void);
+		bool checkLegal(void);
 		int backTracking(int n);
 		int checkExist(int n, const int* position, int* map);
 };

@@ -45,6 +45,11 @@ void Sudoku::readIn(void){
 
 void Sudoku::solve(void){
 	int i, j;
+	
+	if (!checkLegal()){
+		cout<<0<<endl;
+		return;
+	}
 
 	numOfAnswer = 0;
 	
@@ -201,6 +206,31 @@ int Sudoku::checkExist(int n, const int* position, int* map){
 	return -1;
 }
 
+bool Sudoku::checkLegal(void){
+	int i;
+	int choose;
+	int currentRow, currentCol, currentCell;
+
+	for (i=0 ; i<sudokuSize ; i++){
+		currentRow = i / 9;
+		currentCol = i % 9;
+		currentCell = (currentRow/3) * 3 + currentCol / 3;
+
+		choose = map[i];
+		
+		if (choose != 0){
+			if (checkExist(choose, row[currentRow], map) != -1 ||
+				checkExist(choose, col[currentCol], map) != -1 ||
+				checkExist(choose, cell[currentCell], map) != -1)
+			{
+				return false;		//illegal
+			}
+		}
+	}
+
+	return true;
+}
+
 void Sudoku::change(void){
 	srand(time(NULL));
 
@@ -289,10 +319,12 @@ int Sudoku::backTracking(int n){
 	}
 	return 1;		//found a solution
 }
-/*
-int Sudoku::backTracking(int n){
+
+/*int Sudoku::backTracking2(int n){
 	int N = n;
     int currentRow, currentCol, currentCell;
+	vector<int> lack;
+	vector<int>::iterator it;
 
 	while (N < sudokuSize){
 		if (map[N] == 0) {
@@ -300,6 +332,7 @@ int Sudoku::backTracking(int n){
 			currentCol = i % 9;
 			currentCell = (currentRow/3) * 3 + currentCol / 3;
 			
+
 		}
 		N++;
 	}
