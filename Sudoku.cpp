@@ -228,9 +228,9 @@ bool Sudoku::checkLegal(void){
 				return false;		//illegal
 			}
 		}
+		map[i] = choose;
 	}
 
-	map[i] = choose;
 	return true;
 }
 
@@ -269,22 +269,22 @@ void Sudoku::setMap(void){
 
 int Sudoku::backTracking(int n){
 	int N = n;
-	int i, j, k;
+	int i;
 	int currentRow, currentCol, currentCell;
 	int choose, result;
 	vector<int>::iterator it;		//position of begin in vector
 
-	for (i=N ; i<sudokuSize ; i++){
+	while (N < sudokuSize){
 		
-		if (map[i] == 0){
+		if (map[N] == 0){
 			
-			currentRow = i / 9;
-			currentCol = i % 9;
+			currentRow = N / 9;
+			currentCol = N % 9;
 			currentCell = (currentRow/3) * 3 + currentCol / 3;
 			
-			for (j=0 ; j<rowLack[currentRow].size() ; j++){
+			for (i=0 ; i<rowLack[currentRow].size() ; i++){
 				
-				choose = rowLack[currentRow].at(j);
+				choose = rowLack[currentRow].at(i);
 				
 				if (checkExist(choose, col[currentCol], map) == -1 &&
 					checkExist(choose, cell[currentCell], map) == -1)
@@ -292,51 +292,31 @@ int Sudoku::backTracking(int n){
 					it = rowLack[currentRow].begin();
 
 					map[N] = choose;
-					rowLack[currentRow].erase(it+j);
+					rowLack[currentRow].erase(it+i);
 					
 					result = backTracking(N+1);
 					
-					if (result == 1){
-						
-						if (numOfAnswer != 0){
-						   numOfAnswer++;
-					   	   return 2;
-						}
-
-						numOfAnswer++;
-
-						for (k=0 ; k<sudokuSize ; k++){		//assign answer
-							ans[k] = map[k];
-						}
-					}
-					else if (result == 2)
+					if (result == 2)
 						return 2;
 
 					map[N] = 0;
-					rowLack[currentRow].insert(it+j, choose);
+					rowLack[currentRow].insert(it+i, choose);
 				}
 			}
-			return 0;		//no solution
+			return 1;		//no solution or one solution
 		}
 		N++;
 	}
+
+	numOfAnswer++;
+
+	if (numOfAnswer != 1){
+		return 2;
+	}
+
+	for (i=0 ; i<sudokuSize ; i++){     //assign answer
+		ans[i] = map[i];
+	}
+
 	return 1;		//found a solution
 }
-
-/*int Sudoku::backTracking2(int n){
-	int N = n;
-    int currentRow, currentCol, currentCell;
-	vector<int> lack;
-	vector<int>::iterator it;
-
-	while (N < sudokuSize){
-		if (map[N] == 0) {
-			currentRow = i / 9;
-			currentCol = i % 9;
-			currentCell = (currentRow/3) * 3 + currentCol / 3;
-			
-
-		}
-		N++;
-	}
-}*/
