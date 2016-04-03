@@ -217,17 +217,20 @@ bool Sudoku::checkLegal(void){
 		currentCell = (currentRow/3) * 3 + currentCol / 3;
 
 		choose = map[i];
-		
+		map[i] = 0;
+
 		if (choose != 0){
 			if (checkExist(choose, row[currentRow], map) != -1 ||
 				checkExist(choose, col[currentCol], map) != -1 ||
 				checkExist(choose, cell[currentCell], map) != -1)
 			{
+				map[i] = choose;
 				return false;		//illegal
 			}
 		}
 	}
 
+	map[i] = choose;
 	return true;
 }
 
