@@ -87,30 +87,42 @@ void Sudoku::changeNum(int a, int b){
 }
 
 void Sudoku::changeRow(int a, int b){
-	int i;
+	int i, j;
 	int buf;
-	int A = a-1;
-	int B = b-1;
+	int A, B;
 
-	for (i=0 ; i<rowSize ; i++){
-		buf = map[row[A][i]];
-		map[row[A][i]] = map[row[B][i]];
-		map[row[B][i]] = buf;
+	A = a * 3;
+	B = b * 3;
+
+	for (j=0 ; j<3 ; j++){	
+		for (i=0 ; i<rowSize ; i++){
+			buf = map[row[A][i]];
+			map[row[A][i]] = map[row[B][i]];
+			map[row[B][i]] = buf;
+		}
+		A++;
+		B++;
 	}
 
 	return;
 }
 
 void Sudoku::changeCol(int a, int b){
-	int i;
+	int i, j;
 	int buf;
-	int A = a-1;
-	int B = b-1;
+	int A, B;
 
-	for (i=0 ; i<rowSize ; i++){
-		buf = map[col[A][i]];
-		map[col[A][i]] = map[col[B][i]];	
-		map[col[B][i]] = buf;
+	A = a * 3;
+	B = b * 3;
+
+	for (j=0 ; j<3 ; j++){	
+		for (i=0 ; i<rowSize ; i++){
+			buf = map[col[A][i]];
+			map[col[A][i]] = map[col[B][i]];
+			map[col[B][i]] = buf;
+		}
+		A++;
+		B++;
 	}
 
 	return;
@@ -241,8 +253,8 @@ void Sudoku::change(void){
 	srand(time(NULL));
 
 	changeNum(rand()%rowSize+1, rand()%rowSize+1);
-	changeRow(rand()%3+1, rand()%3+1);
-	changeCol(rand()%3+1, rand()%3+1);
+	changeRow(rand()%3, rand()%3);
+	changeCol(rand()%3, rand()%3);
 	rotate(rand()%101);
 	flip(rand()%2);
 
