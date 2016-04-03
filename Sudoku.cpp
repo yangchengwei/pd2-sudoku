@@ -101,6 +101,7 @@ void Sudoku::changeCol(int a, int b){
 	for (i=0 ; i<rowSize ; i++){
 		buf = map[col[a][i]];
 		map[col[a][i]] = map[col[b][i]];
+		
 		map[col[b][i]] = buf;
 	}
 
@@ -252,8 +253,7 @@ int Sudoku::backTracking(int n){
 				
 				choose = rowLack[currentRow].at(j);
 				
-				if (checkExist(choose, row[currentRow], map) == -1 &&
-					checkExist(choose, col[currentCol], map) == -1 &&
+				if (checkExist(choose, col[currentCol], map) == -1 &&
 					checkExist(choose, cell[currentCell], map) == -1)
 				{
 					it = rowLack[currentRow].begin();
@@ -289,3 +289,18 @@ int Sudoku::backTracking(int n){
 	}
 	return 1;		//found a solution
 }
+/*
+int Sudoku::backTracking(int n){
+	int N = n;
+    int currentRow, currentCol, currentCell;
+
+	while (N < sudokuSize){
+		if (map[N] == 0) {
+			currentRow = i / 9;
+			currentCol = i % 9;
+			currentCell = (currentRow/3) * 3 + currentCol / 3;
+			
+		}
+		N++;
+	}
+}*/
