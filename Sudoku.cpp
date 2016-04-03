@@ -241,8 +241,8 @@ void Sudoku::change(void){
 	srand(time(NULL));
 
 	changeNum(rand()%rowSize+1, rand()%rowSize+1);
-	changeRow(rand()%3, rand()%3);
-	changeCol(rand()%3, rand()%3);
+	changeRow(rand()%3+1, rand()%3+1);
+	changeCol(rand()%3+1, rand()%3+1);
 	rotate(rand()%101);
 	flip(rand()%2);
 
